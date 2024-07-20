@@ -1,7 +1,7 @@
 # dependencies
 beautifulsoup4
 colorama
-duckduckgo_search>=6.1.5
+duckduckgo_search
 md2pdf
 playwright
 openai
@@ -27,7 +27,7 @@ langchain_fireworks
 langchain_aws
 tiktoken
 tavily-python
-gpt_researcher
+gpt-researcher
 arxiv
 PyMuPDF
 requests
@@ -43,6 +43,13 @@ websockets
 unstructured
 pandas
 json_repair
+exa_py
+
+# Additional dependencies from multi_agents/requirements.txt
+langgraph-cli
+langgraph
+weasyprint
+json5
 
 # uncomment for testing
 # pytest
