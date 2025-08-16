@@ -15,6 +15,9 @@ venv.bak/
 
 #Ignore generated outputs
 outputs/
+*.lock
+dist/
+gpt_researcher.egg-info/
 
 #Ignore my local docs
 my-docs/
@@ -30,4 +33,22 @@ node_modules
 .docusaurus
 build
 docs/build
-multi_agents/.langgraph-data/
+
+.vscode/launch.json
+.langgraph-data/
+.next/
+package-lock.json
+
+#Vim swp files
+*.swp
+
+# Log files
+logs/
+*.orig
+*.log
+server_log.txt
+
+#Cursor Rules
+.cursorrules
+CURSOR_RULES.md
+/.history
