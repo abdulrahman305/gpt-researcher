@@ -8,8 +8,11 @@ Inspired by the recent [STORM](https://arxiv.org/abs/2402.14207) paper, this exa
 
 An average run generates a 5-6 page research report in multiple formats such as PDF, Docx and Markdown.
 
+Please note: Multi-agents are utilizing the same configuration of models like GPT-Researcher does. However, only the SMART_LLM is used for the time being. Please refer to the [LLM config pages](https://docs.gptr.dev/docs/gpt-researcher/llms/llms).
+
 ## The Multi Agent Team
-The research team is made up of 7 AI agents:
+The research team is made up of 8 agents:
+- **Human** - The human in the loop that oversees the process and provides feedback to the agents.
 - **Chief Editor** - Oversees the research process and manages the team. This is the "master" agent that coordinates the other agents using Langgraph.
 - **Researcher** (gpt-researcher) - A specialized autonomous agent that conducts in depth research on a given topic.
 - **Editor** - Responsible for planning the research outline and structure.
@@ -28,7 +31,7 @@ Generally, the process is based on the following stages:
 
 ### Architecture
 <div align="center">
-<img align="center" height="600" src="https://cowriter-images.s3.amazonaws.com/gptr-langgraph-architecture.png">
+<img align="center" height="600" src="https://github.com/user-attachments/assets/ef561295-05f4-40a8-a57d-8178be687b18">
 </div>
 <br clear="all"/>
 
@@ -44,15 +47,12 @@ More specifically (as seen in the architecture diagram) the process is as follow
 - Publisher - Publishes the final report to multi formats such as PDF, Docx, Markdown, etc.
 
 ## How to run
-1. Install required packages:
+1. Install required packages found in this root folder including `langgraph`:
     ```bash
     pip install -r requirements.txt
     ```
-3. Update env variables
-   ```bash
-   export OPENAI_API_KEY={Your OpenAI API Key here}
-   export TAVILY_API_KEY={Your Tavily API Key here}
-   ```
+3. Update env variables, see the [GPT-Researcher docs](https://docs.gptr.dev/docs/gpt-researcher/llms/llms) for more details.
+
 2. Run the application:
     ```bash
     python main.py
@@ -64,6 +64,7 @@ To change the research query and customize the report, edit the `task.json` file
 - `query` - The research query or task.
 - `model` - The OpenAI LLM to use for the agents.
 - `max_sections` - The maximum number of sections in the report. Each section is a subtopic of the research query.
+- `include_human_feedback` - If true, the user can provide feedback to the agents. If false, the agents will work autonomously.
 - `publish_formats` - The formats to publish the report in. The reports will be written in the `output` directory.
 - `source` - The location from which to conduct the research. Options: `web` or `local`. For local, please add `DOC_PATH` env var.
 - `follow_guidelines` - If true, the research report will follow the guidelines below. It will take longer to complete. If false, the report will be generated faster but may not follow the guidelines.
@@ -81,6 +82,7 @@ To change the research query and customize the report, edit the `task.json` file
     "pdf": true,
     "docx": true
   },
+  "include_human_feedback": false,
   "source": "web",
   "follow_guidelines": true,
   "guidelines": [

@@ -1,13 +1,15 @@
-from langchain_community.document_loaders import WebBaseLoader
-
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import requests
+from ..utils import get_relevant_images, extract_title
 
 class WebBaseLoaderScraper:
 
     def __init__(self, link, session=None):
         self.link = link
-        self.session = session
+        self.session = session or requests.Session()
 
-    def scrape(self) -> str:
+    def scrape(self) -> tuple:
         """
         This Python function scrapes content from a webpage using a WebBaseLoader object and returns the
         concatenated page content.
@@ -18,6 +20,7 @@ class WebBaseLoaderScraper:
         occurs during the process, an error message is printed and an empty string is returned.
         """
         try:
+            from langchain_community.document_loaders import WebBaseLoader
             loader = WebBaseLoader(self.link)
             loader.requests_kwargs = {"verify": False}
             docs = loader.load()
@@ -26,8 +29,15 @@ class WebBaseLoaderScraper:
             for doc in docs:
                 content += doc.page_content
 
-            return content
+            response = self.session.get(self.link)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            image_urls = get_relevant_images(soup, self.link)
+            
+            # Extract the title using the utility function
+            title = extract_title(soup)
+
+            return content, image_urls, title
 
         except Exception as e:
             print("Error! : " + str(e))
-            return ""
+            return "", [], ""
