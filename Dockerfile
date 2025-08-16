@@ -1,3 +1,4 @@
+FROM python:3.11.9-slim-bullseye as install-browser
 # Stage 1: Browser and build tools installation
 #FROM python:3.13.3-slim-bookworm AS install-browser
 FROM python:3.11.4-slim-bullseye AS install-browser
